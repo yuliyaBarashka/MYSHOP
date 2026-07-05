@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        /* Sidebar styles */
+        .sidebar {
+            min-height: 100vh;
+            background: #2c3e50;
+            padding: 0;
+        }
+        .sidebar-brand {
+            padding: 20px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .sidebar-brand I {
+            margin-right: 10px;
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.7);
+            padding: 12px 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            border-left-color: #3498db;
+        }
+        .sidebar .nav-link.active {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            border-left-color: #3498db;
+        }
+        .sidebar .nav-link I {
+            width: 20px;
+            margin-right: 10px;
+        }
+        /* Main content */
+        .main-content {
+            padding: 30px;
+        }
+        .product-card {
+            border: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-img-top {
+            height: 180px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #6c757d;
+            border-radius: 8px 8px 0 0;
+        }
+        .product-card .card-title {
+            font-weight: bold;
+        }
+        .price {
+            font-size: 24px;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .btn-buy {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 30px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .btn-buy:hover {
+            background: #0056b3;
+            color: #fff;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .time-badge {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        max-width: 768px {
+            .sidebar {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 sidebar">
+                <div class="sidebar-brand">
+                    <i class="fas fa-store"></i> Б Меню
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            <i class="fas fa-home"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">
+                            <i class="fas fa-th-list"></i> Категории
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+
+
+href="#">
+                            <i class="fas fa-shopping-bag"></i> Заказы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts">
+                            <i class="fas fa-envelope"></i> Контакты
+                        </a>
+                    </li>
+                </ul>
+                <div class="p-3 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center text-white">
+                        <div class="user-avatar me-2">A</div>
+                        <div>
+                            <div class="small fw-bold">Администратор</div>
+                            <div class="small text-white-50">admin@shop.ru</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 col-lg-10 main-content">
+                <h1 class="display-5 mb-4">Главная</h1>
+                <p class="lead mb-5">Вы находитесь на сайте, предназначенном для продажи товаров.</p>
+
+                <!-- Products Grid with Thumbnails -->
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">🖥️</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 1</h5>
+                                <p class="price">$100</p>
+                                <p class="card-text text-muted small">
+                                    10 users included, 2 GB of storage, Email support, Help center access
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">9 mins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">📱</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 2</h5>
+                                <p class="price">$100</p>
+                                <p class="card-text text-muted small">
+                                    10 users included, 2 GB of storage, Email support, Help center access
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">9 mins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">💻</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 3</h5>
+                                <p class="price">$100</p>
+                                <p class="card-text text-muted small">
+                                    10 users included, 2 GB of storage, Email support, Help center access
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">9 mins</span>
+                                </div>
+
+
+</div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">🎮</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 4</h5>
+                                <p class="price">$150</p>
+                                <p class="card-text text-muted small">
+                                    5 users included, 1 GB of storage, Email support, Help center access
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">12 mins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">📷</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 5</h5>
+                                <p class="price">$200</p>
+                                <p class="card-text text-muted small">
+                                    20 users included, 5 GB of storage, Email support, Priority support
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">5 mins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 6 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card product-card">
+                            <div class="card-img-top">🎧</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Товар 6</h5>
+                                <p class="price">$80</p>
+                                <p class="card-text text-muted small">
+                                    3 users included, 500 MB of storage, Email support, Help center access
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-buy">Купить</button>
+                                    <span class="time-badge">15 mins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
