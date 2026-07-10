@@ -1,0 +1,41 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block header %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Изображение -->
+    <div class="col-md-6">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+        {% else %}
+        <img src="https://via.placeholder.com/600x400" class="img-fluid rounded" alt="Нет фото">
+        {% endif %}
+    </div>
+
+    <!-- Информация о товаре -->
+    <div class="col-md-6">
+        <h1>{{ product.name }}</h1>
+        <h2 class="text-primary">${{ product.price }}</h2>
+        <hr>
+        <p class="lead">{{ product.description }}</p>
+        <p><strong>Категория:</strong> {{ product.category.name }}</p>
+        <p class="text-muted">
+            <small>Добавлен: {{ product.created_at|date:"d.m.Y H:i" }}</small>
+        </p>
+        <p class="text-muted">
+            <small>Изменен: {{ product.updated_at|date:"d.m.Y H:i" }}</small>
+        </p>
+
+        <!-- Кнопки для переходов обратно -->
+        <button class="btn btn-success btn-lg w-100">Купить</button>
+        <div class="mt-2 d-grid gap-2">
+            <a href="{% url 'catalog:catalog' %}" class="btn btn-outline-secondary">Вернуться к каталогу</a>
+            <a href="{% url 'catalog:home' %}" class="btn btn-outline-secondary">На главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

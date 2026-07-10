@@ -1,0 +1,32 @@
+<div class="col-2 bg-dark text-white min-vh-100 p-3 d-flex flex-column">
+    <h4 class="mb-4">Меню</h4>
+
+    <ul class="nav flex-column mb-4">
+        <li class="nav-item">
+            <a href="{% url 'catalog:home' %}" class="nav-link text-white">Главная</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'catalog:catalog' %}" class="nav-link text-white">Каталог</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'catalog:contacts' %}" class="nav-link text-white">Контакты</a>
+        </li>
+        <!-- Доп. задание -->
+        <li class="nav-item">
+            <a href="{% url 'catalog:add_product' %}" class="nav-link text-white">➕ Добавить товар</a>
+        </li>
+    </ul>
+
+    <div class="mt-auto">
+        <hr class="border-light">
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                👤 Пользователь
+            </button>
+            <ul class="dropdown-menu w-100">
+                <li><a class="dropdown-item" href="#">Профиль</a></li>
+                <li><a class="dropdown-item" href="#">Выход</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
