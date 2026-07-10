@@ -1,0 +1,39 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block header %}Контакты{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <h2>Свяжитесь с нами</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="name" class="form-control" placeholder="Имя" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Почта" required>
+            </div>
+            <div class="mb-3">
+                <textarea name="message" class="form-control" rows="5" placeholder="Сообщение" required></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <div class="col-6">
+        <h2>Наши контакты</h2>
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Телефон:</strong> +7 999 999 99 99</p>
+                <p><strong>Email:</strong> info@mail.ru</p>
+                <p><strong>Адрес:</strong> г. Москва, ул. Такаято, д. 1</p>
+                <p><strong>Режим работы:</strong> Пн-Пт 9:00-20:00</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

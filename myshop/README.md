@@ -55,3 +55,5 @@ URL Ожидаемый результат
 / Главная страница  
 /contacts Страница контактов  
 /any-other Страница 404  
+
+pip install requirements.txt
