@@ -5,8 +5,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('catalog.urls')),  # Без namespace, так как он уже в app_name
+    path('', include('catalog.urls')),
+    path('blogs/', include('blog.urls')),  # Все URL блога начинаются с blogs/
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
