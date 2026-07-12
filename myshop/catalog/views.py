@@ -1,52 +1,41 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from .models import Product, Category
 
+class HomeView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'products'
+    paginate_by = 3
 
-def home(request):
-    # Получаем все товары
-    products_list = Product.objects.all()
+    def get_queryset(self):
+        return Product.objects.all().order_by('-created_at')
 
-    # Пагинация (доп. задание)
-    paginator = Paginator(products_list, 3)
-    page_number = request.GET.get('page')
-    products = paginator.get_page(page_number)
+class CatalogView(ListView):
+    model = Product
+    template_name = 'catalog/catalog.html'
+    context_object_name = 'products'
 
-    return render(request, 'catalog/home.html', {'products': products})
+    def get_queryset(self):
+        return Product.objects.all().order_by('-created_at')
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
+    pk_url_kwarg = 'pk'
 
-def product_detail(request, pk):
-    # Получаем товар по pk
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'catalog/product_detail.html', {'product': product})
+class ContactsView(TemplateView):
+    template_name = 'catalog/contacts.html'
 
+class AddProductView(CreateView):
+    model = Product
+    template_name = 'catalog/add_product.html'
+    fields = ['name', 'description', 'image', 'category', 'price']
+    success_url = reverse_lazy('catalog:catalog')
 
-def catalog(request):
-    products = Product.objects.all()
-    return render(request, 'catalog/catalog.html', {'products': products})
-
-
-def contacts(request):
-    return render(request, 'catalog/contacts.html')
-
-
-# Доп. задание: Добавление товара
-def add_product(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        price = request.POST.get('price')
-        category_id = request.POST.get('category')
-
-        if name and description and price and category_id:
-            category = Category.objects.get(id=category_id)
-            Product.objects.create(
-                name=name,
-                description=description,
-                price=price,
-                category=category
-            )
-            return redirect('catalog:home')
-
-    categories = Category.objects.all()
-    return render(request, 'catalog/add_product.html', {'categories': categories})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
