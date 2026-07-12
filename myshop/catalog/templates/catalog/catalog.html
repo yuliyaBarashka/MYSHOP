@@ -1,0 +1,34 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block header %}Каталог товаров{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-5">Каталог товаров</h1>
+
+<div class="row g-4">
+    {% for product in products %}
+    <div class="col-4">
+        <div class="card h-100">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ product.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                <p class="card-text fw-bold text-primary">${{ product.price }}</p>
+                <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary w-100">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-center text-muted">Товаров пока нет</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
