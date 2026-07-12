@@ -1,6 +1,9 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import BlogPost
+
 
 class BlogListView(ListView):
     model = BlogPost
@@ -11,6 +14,7 @@ class BlogListView(ListView):
         # Выводим только опубликованные статьи
         return BlogPost.objects.filter(is_published=True).order_by('-created_at')
 
+
 class BlogDetailView(DetailView):
     model = BlogPost
     template_name = 'blog/blog_detail.html'
@@ -18,10 +22,41 @@ class BlogDetailView(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        # Увеличиваем счетчик просмотров
+        old_views = obj.views_count
         obj.views_count += 1
         obj.save()
+
+        # Если статья достигла 100 просмотров, отправляем поздравление
+        if old_views < 100 and obj.views_count >= 100:
+            self.send_congratulation_email(obj)
+
         return obj
+
+    def send_congratulation_email(self, post):
+        subject = f'🎉 Поздравление! Статья "{post.title}" набрала 100 просмотров!'
+        message = f'''
+        Поздравляем!
+
+        Ваша статья "{post.title}" набрала {post.views_count} просмотров!
+
+        Продолжайте в том же духе!
+
+        Ссылка на статью: http://localhost:8000/blogs/{post.pk}/
+
+        ---
+        С уважением, команда интернет-магазина
+        '''
+
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMIN_EMAIL],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(f'Ошибка отправки email: {e}')
 
 class BlogCreateView(CreateView):
     model = BlogPost
