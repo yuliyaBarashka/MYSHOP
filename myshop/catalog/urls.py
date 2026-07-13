@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     HomeView, CatalogView, ProductDetailView,
-    ContactsView, AddProductView
+    ContactsView, ProductCreateView, ProductUpdateView, ProductDeleteView
 )
 
 app_name = 'catalog'
@@ -11,5 +11,7 @@ urlpatterns = [
     path('catalog/', CatalogView.as_view(), name='catalog'),
     path('contacts/', ContactsView.as_view(), name='contacts'),
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
-    path('add/', AddProductView.as_view(), name='add_product'),
+    path('product/create/', ProductCreateView.as_view(), name='product_create'),
+    path('product/<int:pk>/edit/', ProductUpdateView.as_view(), name='product_edit'),
+    path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
 ]

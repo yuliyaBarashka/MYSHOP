@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DetailView, CreateView, TemplateView
-from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from .models import Product, Category
+from .forms import ProductForm
 
 class HomeView(ListView):
     model = Product
@@ -29,13 +30,33 @@ class ProductDetailView(DetailView):
 class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
 
-class AddProductView(CreateView):
+class ProductCreateView(CreateView):
     model = Product
-    template_name = 'catalog/add_product.html'
-    fields = ['name', 'description', 'image', 'category', 'price']
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:catalog')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление товара'
+        context['button_text'] = 'Добавить товар'
         context['categories'] = Category.objects.all()
         return context
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:catalog')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Редактирование товара'
+        context['button_text'] = 'Сохранить изменения'
+        context['categories'] = Category.objects.all()
+        return context
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:catalog')
