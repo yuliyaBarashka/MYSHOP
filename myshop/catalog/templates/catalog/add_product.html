@@ -1,0 +1,50 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Добавить товар{% endblock %}
+
+{% block header %}Добавление товара{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Название товара *</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Описание *</label>
+                        <textarea name="description" class="form-control" rows="5" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Цена *</label>
+                        <input type="number" name="price" class="form-control" step="0.01" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Категория *</label>
+                        <select name="category" class="form-select" required>
+                            <option value="">Выберите категорию</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Добавить товар</button>
+                        <a href="{% url 'catalog:home' %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
