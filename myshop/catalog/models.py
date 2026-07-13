@@ -1,5 +1,11 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
+# Константа с запрещенными словами (вынесена в глобальную область)
+FORBIDDEN_WORDS = [
+    'казино', 'криптовалюта', 'крипта', 'биржа',
+    'дешево', 'бесплатно', 'обман', 'полиция', 'радар'
+]
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
