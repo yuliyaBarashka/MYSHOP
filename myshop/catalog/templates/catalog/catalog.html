@@ -6,14 +6,19 @@
 {% block header %}Каталог товаров{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-5">Каталог товаров</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Каталог товаров</h1>
+    <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
+        ➕ Добавить товар
+    </a>
+</div>
 
 <div class="row g-4">
     {% for product in products %}
     <div class="col-4">
         <div class="card h-100">
             {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
             {% else %}
             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото">
             {% endif %}
@@ -21,13 +26,33 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                 <p class="card-text fw-bold text-primary">${{ product.price }}</p>
-                <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary w-100">Подробнее</a>
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary btn-sm">
+                        Подробнее
+                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-warning btn-sm flex-grow-1">
+                            ✏️ Редактировать
+                        </a>
+                        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger btn-sm flex-grow-1">
+                            🗑️ Удалить
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     {% empty %}
     <div class="col-12">
-        <p class="text-center text-muted">Товаров пока нет</p>
+        <div class="alert alert-info text-center">
+            <h5>Товаров пока нет</h5>
+            <p>Станьте первым, кто добавит товар!</p>
+            <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
+                ➕ Добавить товар
+            </a>
+        </div>
     </div>
     {% endfor %}
 </div>

@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'catalog:add_product' %}" class="nav-link text-white {% if '/add/' in request.path %}active{% endif %}">
+            <a href="{% url 'catalog:product_create' %}" class="nav-link text-white {% if '/product/create/' in request.path %}active{% endif %}">
                 ➕ Добавить товар
             </a>
         </li>
@@ -34,7 +34,7 @@
         <div class="dropdown">
             <button class="btn btn-outline-light dropdown-toggle w-100 d-flex align-items-center justify-content-center gap-2"
                     type="button" data-bs-toggle="dropdown">
-                <img src="https://via.placeholder.com/32" alt="user"
+                <img src="https://via.placeholder.com/32&quot; alt="user"
                      class="rounded-circle" width="32" height="32">
                 <span>Пользователь</span>
             </button>
