@@ -1,0 +1,49 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name|default:"Категория" }}{% endblock %}
+
+{% block header %}{{ category.name|default:"Категория" }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Товары в категории: {{ category.name }}</h1>
+    <a href="{% url 'catalog:catalog' %}" class="btn btn-secondary">
+        ← Все категории
+    </a>
+</div>
+
+{% if category.description %}
+<p class="lead mb-4">{{ category.description }}</p>
+{% endif %}
+
+<div class="row g-4">
+    {% for product in products %}
+    <div class="col-4">
+        <div class="card h-100">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                <p class="card-text fw-bold text-primary">${{ product.price }}</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary btn-sm w-100">
+                    Подробнее
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h5>В этой категории пока нет товаров</h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
