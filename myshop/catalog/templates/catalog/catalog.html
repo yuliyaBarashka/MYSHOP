@@ -8,9 +8,11 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Каталог товаров</h1>
+    {% if user.is_authenticated %}
     <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
         ➕ Добавить товар
     </a>
+    {% endif %}
 </div>
 
 <div class="row g-4">
@@ -26,20 +28,34 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                 <p class="card-text fw-bold text-primary">${{ product.price }}</p>
+                {% if not product.is_published %}
+                <span class="badge bg-warning text-dark">На модерации</span>
+                {% endif %}
             </div>
             <div class="card-footer bg-transparent">
                 <div class="d-grid gap-2">
                     <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary btn-sm">
                         Подробнее
                     </a>
+                    {% if user.is_authenticated and product.owner == user or perms.catalog.can_unpublish_product %}
                     <div class="d-flex gap-2">
+                        {% if product.owner == user or perms.catalog.can_unpublish_product %}
                         <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-warning btn-sm flex-grow-1">
                             ✏️ Редактировать
                         </a>
+                        {% endif %}
+                        {% if product.owner == user or perms.catalog.can_unpublish_product %}
                         <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger btn-sm flex-grow-1">
                             🗑️ Удалить
                         </a>
+                        {% endif %}
+                        {% if perms.catalog.can_unpublish_product %}
+                        <a href="{% url 'catalog:product_moderate' product.pk %}" class="btn btn-info btn-sm flex-grow-1">
+                            📋 Модерация
+                        </a>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -48,10 +64,11 @@
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h5>Товаров пока нет</h5>
-            <p>Станьте первым, кто добавит товар!</p>
+            {% if user.is_authenticated %}
             <a href="{% url 'catalog:product_create' %}" class="btn btn-success">
                 ➕ Добавить товар
             </a>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
