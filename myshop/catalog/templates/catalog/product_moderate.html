@@ -1,0 +1,65 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Модерация товара{% endblock %}
+
+{% block header %}Модерация товара{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Модерация товара</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/300x200" class="img-fluid rounded" alt="Нет фото">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h5>{{ product.name }}</h5>
+                        <p>{{ product.description|truncatechars:200 }}</p>
+                        <p><strong>Цена:</strong> ${{ product.price }}</p>
+                        <p><strong>Категория:</strong> {{ product.category.name|default:"Не указана" }}</p>
+                        <p><strong>Владелец:</strong> {{ product.owner.email|default:"Не указан" }}</p>
+                        <p><strong>Статус:</strong>
+                            {% if product.is_published %}
+                            <span class="badge bg-success">Опубликован</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">На модерации</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox"
+                                   name="is_published" id="is_published"
+                                   {% if product.is_published %}checked{% endif %}>
+                            <label class="form-check-label" for="is_published">
+                                Опубликовать продукт
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <a href="{% url 'catalog:catalog' %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
