@@ -1,0 +1,64 @@
+<div class="col-2 bg-dark text-white min-vh-100 p-3 d-flex flex-column">
+    <h4 class="mb-4">Меню</h4>
+
+    <ul class="nav flex-column mb-4">
+        <li class="nav-item">
+            <a href="{% url 'catalog:home' %}" class="nav-link text-white {% if request.path == '/' %}active{% endif %}">
+                🏠 Главная
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'catalog:catalog' %}" class="nav-link text-white {% if '/catalog/' in request.path %}active{% endif %}">
+                📦 Каталог
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'blog:list' %}" class="nav-link text-white {% if '/blogs/' in request.path %}active{% endif %}">
+                📝 Блог
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'catalog:contacts' %}" class="nav-link text-white {% if '/contacts/' in request.path %}active{% endif %}">
+                📞 Контакты
+            </a>
+        </li>
+
+        <!-- Только для авторизованных пользователей -->
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a href="{% url 'catalog:product_create' %}" class="nav-link text-white {% if '/product/create/' in request.path %}active{% endif %}">
+                ➕ Добавить товар
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <div class="mt-auto">
+        <hr class="border-light">
+
+        <!-- Блок пользователя -->
+        {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle w-100 d-flex align-items-center justify-content-center gap-2"
+                        type="button" data-bs-toggle="dropdown">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="user" class="rounded-circle" width="32" height="32" style="object-fit: cover;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/32" alt="user" class="rounded-circle" width="32" height="32">
+                    {% endif %}
+                    <span>{{ user.email|truncatechars:15 }}</span>
+                </button>
+                <ul class="dropdown-menu w-100">
+                    <li><a class="dropdown-item" href="{% url 'users:profile' %}">👤 Профиль</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'users:logout' %}">🚪 Выход</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="d-grid gap-2">
+                <a href="{% url 'users:login' %}" class="btn btn-outline-light">Войти</a>
+                <a href="{% url 'users:register' %}" class="btn btn-outline-light">Регистрация</a>
+            </div>
+        {% endif %}
+    </div>
+</div>

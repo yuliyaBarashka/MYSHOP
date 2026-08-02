@@ -1,0 +1,42 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Блог{% endblock %}
+
+{% block header %}Блог{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Статьи блога</h1>
+    <a href="{% url 'blog:create' %}" class="btn btn-primary">➕ Создать статью</a>
+</div>
+
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            {% if post.preview %}
+            <img src="{{ post.preview.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <img src="https://via.placeholder.com/600x20" class="card-img-top" alt="Нет фото">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content|truncatechars:150 }}</p>
+                <p class="text-muted small">
+                    <i class="bi bi-eye"></i> {{ post.views_count }} просмотров
+                </p>
+                <a href="{% url 'blog:detail' post.pk %}" class="btn btn-outline-primary">Читать далее</a>
+            </div>
+            <div class="card-footer text-muted">
+                {{ post.created_at|date:"d.m.Y H:i" }}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-center text-muted">Статей пока нет</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
